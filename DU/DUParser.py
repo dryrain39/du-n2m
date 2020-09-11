@@ -1,4 +1,5 @@
 import logging
+import re
 
 import requests
 import htmlmin
@@ -27,7 +28,9 @@ def du_content_parser(url):
 
         images = bs.find_all("img")
         for i in range(len(images)):
-            images[i]["src"] = "https://www.daegu.ac.kr" + images[i]["src"]
+            if not images[i]["src"].startswith("http"):
+                images[i]["src"] = "https://www.daegu.ac.kr" + images[i]["src"]
+                # images[i]["style"] = ""  # 이미지에 스타일 없앰
 
         content = bs.find("td", class_="contentArea")
 
@@ -54,11 +57,16 @@ def du_content_parser(url):
         for line in content.text.split("\n"):
             output_content += line.replace("  ", " ").strip() + " "
 
+        # 불필요한 태그 및 스타일 삭제
+        output_html = output_html \
+            .replace("font-family: 굴림체;", "") \
+            .replace("font-family: 굴림;", "")
+        output_html = re.sub('margin-(top|bottom) ?: ?0m?m?;', '', output_html)
 
         return ParserResult(
             success=True,
             title=title,
-            html=output_html.replace("font-family: 굴림체;", "").replace("font-family: 굴림;", ""),
+            html=output_html,
             text=output_content,
             files=output_files,
             file_text=output_files_text
