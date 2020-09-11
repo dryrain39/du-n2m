@@ -8,6 +8,7 @@ DU Notification to mail
 
 1. python 3.8 (3.8.5 에서 테스트됨)
 2. `pip3 install beautifulsoup4 htmlmin requests`
+3. starttls 를 지원하는 smtp 서버
 
 ## 세팅
 
