@@ -1,0 +1,15 @@
+{
+  "account": {
+    "id": "",
+    "pw": ""
+  },
+  "sendto": "",
+  "sender": "",
+  "server": {
+    "addr": "smtp.fastmail.com",
+    "port": 587
+  },
+  "store_cnt": 100,
+  "no_get_page": 5,
+  "first_run": false
+}
